@@ -2,6 +2,7 @@ package io.github.shield_master.actors.projectiles;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import io.github.shield_master.utils.AssetLoader;
 import io.github.shield_master.utils.Direction;
@@ -16,7 +17,7 @@ public class ProjectileFactory {
         REVERSE
     }
 
-    public static void generateProjectile(Stage stage) {
+    public static void generateProjectile(Group projectilesGroup) {
         Direction direction = Direction.values()[(int) (Math.random() * Direction.values().length)];
 
         ProjectileType projectileType = ProjectileType.values()[(int) (Math.random() * ProjectileType.values().length)];
@@ -26,6 +27,6 @@ public class ProjectileFactory {
             case REVERSE -> new ReverseProjectile(reverseProjectileTexture, direction);
         };
 
-        stage.addActor(projectile);
+        projectilesGroup.addActor(projectile);
     }
 }

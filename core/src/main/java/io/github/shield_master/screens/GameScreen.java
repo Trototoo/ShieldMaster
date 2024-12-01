@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -42,7 +41,7 @@ public class GameScreen implements Screen {
     private boolean isPaused;
     private Table pauseMenu;
 
-    private Group projectiles;
+    private final Group projectiles;
 
     public GameScreen(MainGame game) {
         this.game = game;
@@ -161,7 +160,7 @@ public class GameScreen implements Screen {
                     scoreLabel.setText("Score: " + score);
                 }
                 if (Intersector.overlaps(player.getBoundingRectangle(), projectile.getBounds())) {
-                    player.lives--;
+//                    player.lives--;
                     projectile.deactivate();
                     if (player.lives == 0) {
                         game.setScreen(new GameOverScreen(game, score));

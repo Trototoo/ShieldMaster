@@ -12,11 +12,11 @@ public abstract class Projectile extends Actor {
     protected TextureRegion textureRegion;
     protected Vector2 velocity;
     protected boolean isActive;
-    private Direction direction;
+    protected Direction direction;
     private Rectangle bounds;
     private Vector2 standardVelocity;
-    private float PROJECTILE_LONG_SIDE = 13f;
-    private float PROJECTILE_SHORT_SIDE = 7f;
+    private final float PROJECTILE_LONG_SIDE = 13f;
+    private final float PROJECTILE_SHORT_SIDE = 7f;
 
     public Projectile(TextureRegion textureRegion, Direction direction) {
         this.textureRegion = textureRegion;
@@ -84,15 +84,7 @@ public abstract class Projectile extends Actor {
         return bounds;
     }
 
-    private void updateBounds() {
+    void updateBounds() {
         bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    };
 }

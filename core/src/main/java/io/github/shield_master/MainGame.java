@@ -2,7 +2,6 @@ package io.github.shield_master;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
-import io.github.shield_master.screens.GameScreen;
 import io.github.shield_master.screens.MainMenuScreen;
 import io.github.shield_master.utils.AssetLoader;
 

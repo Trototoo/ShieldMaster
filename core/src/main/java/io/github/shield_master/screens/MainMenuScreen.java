@@ -15,11 +15,9 @@ import io.github.shield_master.utils.AssetLoader;
 import io.github.shield_master.utils.Constants;
 
 public class MainMenuScreen implements Screen {
-    private final MainGame game;
     private final Stage stage;
 
     public MainMenuScreen(MainGame game) {
-        this.game = game;
 
         OrthographicCamera camera = new OrthographicCamera();
         StretchViewport viewport = new StretchViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT, camera);

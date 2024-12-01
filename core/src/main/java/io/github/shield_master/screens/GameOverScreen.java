@@ -5,13 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -22,17 +20,10 @@ import io.github.shield_master.utils.Constants;
 import io.github.shield_master.utils.GameManager;
 
 public class GameOverScreen implements Screen {
-    private final MainGame game;
     private final Stage stage;
-    private final OrthographicCamera camera;
-
-    private final Label scoreLabel;
-    private final Label highScoreLabel;
 
     public GameOverScreen(MainGame game, int finalScore) {
-        this.game = game;
-
-        camera = new OrthographicCamera();
+        OrthographicCamera camera = new OrthographicCamera();
         StretchViewport viewport = new StretchViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT, camera);
         stage = new Stage(viewport);
 
@@ -49,7 +40,7 @@ public class GameOverScreen implements Screen {
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(AssetLoader.fontHighscore, Color.WHITE);
 
-        scoreLabel = new Label(String.valueOf(finalScore), labelStyle);
+        Label scoreLabel = new Label(String.valueOf(finalScore), labelStyle);
         float scoreLabelX = Constants.GAME_WIDTH / 2 - 55;
         float scoreLabelY = Constants.GAME_HEIGHT - 147;
         scoreLabel.setPosition(scoreLabelX, scoreLabelY);
@@ -57,7 +48,7 @@ public class GameOverScreen implements Screen {
         scoreLabel.setAlignment(Align.center);
         stage.addActor(scoreLabel);
 
-        highScoreLabel = new Label(String.valueOf(GameManager.getHighScore()), labelStyle);
+        Label highScoreLabel = new Label(String.valueOf(GameManager.getHighScore()), labelStyle);
         float highScoreLabelX = Constants.GAME_WIDTH / 2 + 5;
         float highScoreLabelY = Constants.GAME_HEIGHT - 147;
         highScoreLabel.setPosition(highScoreLabelX, highScoreLabelY);

@@ -1,11 +1,12 @@
 package io.github.shield_master.actors.projectiles;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import io.github.shield_master.utils.AssetLoader;
 import io.github.shield_master.utils.Direction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectileFactory {
 
@@ -14,13 +15,20 @@ public class ProjectileFactory {
 
     private enum ProjectileType {
         REGULAR,
-        REVERSE
+        REVERSE,
+    }
+
+    private static final List<ProjectileChance> projectileChances = new ArrayList<>();
+
+    static {
+        projectileChances.add(new ProjectileChance(ProjectileType.REGULAR, 0.9f));
+        projectileChances.add(new ProjectileChance(ProjectileType.REVERSE, 0.10f));
     }
 
     public static void generateProjectile(Group projectilesGroup) {
         Direction direction = Direction.values()[(int) (Math.random() * Direction.values().length)];
 
-        ProjectileType projectileType = ProjectileType.values()[(int) (Math.random() * ProjectileType.values().length)];
+        ProjectileType projectileType = getRandomProjectileType();
 
         Projectile projectile = switch (projectileType) {
             case REGULAR -> new RegularProjectile(regularProjectileTexture, direction);
@@ -28,5 +36,20 @@ public class ProjectileFactory {
         };
 
         projectilesGroup.addActor(projectile);
+    }
+
+    private static ProjectileType getRandomProjectileType() {
+        double randomValue = Math.random();
+        double cumulativeProbability = 0.0;
+        for (ProjectileChance projectileChance : projectileChances) {
+            cumulativeProbability += projectileChance.chance;
+            if (randomValue <= cumulativeProbability) {
+                return projectileChance.projectileType;
+            }
+        }
+        return ProjectileType.REGULAR;
+    }
+
+    private record ProjectileChance(ProjectileType projectileType, float chance) {
     }
 }

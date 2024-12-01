@@ -13,10 +13,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player extends Actor {
+    public static final int PLAYER_WIDTH = 16;
+    public static final int PLAYER_HEIGHT = 16;
+
     private float stateTime;
+
     private Direction currentDirection;
     public int lives = Constants.PLAYER_LIVES;
+
+    private final Rectangle boundingRectangle;
     private final Rectangle shieldRectangle;
+
     private final Map<Direction, Animation<TextureRegion>> playerAnimations;
     private Animation<TextureRegion> currentAnimation;
 
@@ -27,8 +34,9 @@ public class Player extends Actor {
         shieldRectangle = new Rectangle();
         updateShieldPosition();
 
-        setSize(Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+        setSize(PLAYER_WIDTH, PLAYER_HEIGHT);
         setPosition(Constants.GAME_WIDTH / 2 - getWidth() / 2, Constants.GAME_HEIGHT / 2 - getHeight() / 2);
+        boundingRectangle = new Rectangle(getX(), getY(), getWidth(), getHeight());
 
         playerAnimations = new HashMap<>();
         playerAnimations.put(Direction.UP, AssetLoader.playerUpAnimation);
@@ -130,6 +138,6 @@ public class Player extends Actor {
     }
 
     public Rectangle getBoundingRectangle() {
-        return new Rectangle(getX(), getY(), getWidth(), getHeight());
+        return boundingRectangle;
     }
 }

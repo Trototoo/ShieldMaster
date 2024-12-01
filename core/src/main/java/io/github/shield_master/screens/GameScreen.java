@@ -5,35 +5,33 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.shield_master.actors.Background;
 import io.github.shield_master.actors.Player;
 import io.github.shield_master.actors.projectiles.Projectile;
-import io.github.shield_master.actors.projectiles.RegularProjectile;
+import io.github.shield_master.actors.projectiles.ProjectileFactory;
 import io.github.shield_master.utils.AssetLoader;
 import io.github.shield_master.utils.Constants;
 import io.github.shield_master.utils.Direction;
 
 public class GameScreen implements Screen {
     private final Stage stage;
-    private final OrthographicCamera camera;
     private final Viewport viewport;
 
-    private Player player;
+    private final Player player;
 
-    private Label scoreLabel;
+    private final Label scoreLabel;
     private int score;
     private float spawnTimer;
 
     public GameScreen() {
-        camera = new OrthographicCamera();
+        OrthographicCamera camera = new OrthographicCamera();
         viewport = new StretchViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT, camera);
         stage = new Stage(viewport);
 
@@ -69,7 +67,7 @@ public class GameScreen implements Screen {
         spawnTimer += delta;
         if (spawnTimer >= 1) {
             if (Math.random() < 0.3) {
-                spawnProjectile();
+                ProjectileFactory.generateProjectile(stage);
                 spawnTimer = 0;
             }
         }
@@ -94,23 +92,21 @@ public class GameScreen implements Screen {
 
     private void checkCollisions() {
         for (Actor actor : stage.getActors()) {
-            if (actor instanceof Projectile) {
-                Projectile projectile = (Projectile) actor;
-
-                if (!projectile.isActive()) continue;
-
-//                if (player.getShi)
-
+            if (actor instanceof Projectile projectile) {
+                if (Intersector.overlaps(player.getShieldBoundingRectangle(), projectile.getBounds())) {
+                    projectile.deactivate();
+                    score++;
+                    scoreLabel.setText("Score: " + score);
+                }
+                if (Intersector.overlaps(player.getBoundingRectangle(), projectile.getBounds())) {
+//                    player.lives--;
+//                    if (player.lives == 0) {
+//                        dispose();
+//                    }
+                    projectile.deactivate();
+                }
             }
         }
-    }
-
-    private void spawnProjectile() {
-        Direction direction = Direction.values()[(int) (Math.random() * Direction.values().length)];
-
-        Projectile projectile;
-        projectile = new RegularProjectile(AssetLoader.regularProjectileTexture, direction);
-        stage.addActor(projectile);
     }
 
     @Override

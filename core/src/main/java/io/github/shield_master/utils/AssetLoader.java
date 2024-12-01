@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import io.github.shield_master.actors.Player;
 
 public class AssetLoader {
     public static AssetManager assetManager;
@@ -13,6 +14,7 @@ public class AssetLoader {
     public static TextureRegion[][] playerFrames;
 
     public static TextureRegion regularProjectileTexture;
+    public static TextureRegion reverseProjectileTexture;
 
     public static Animation<TextureRegion> playerUpAnimation;
     public static Animation<TextureRegion> playerDownAnimation;
@@ -31,16 +33,18 @@ public class AssetLoader {
         assetManager.load("images/shield_horizontal.png", Texture.class);
         assetManager.load("images/shield_vertical.png", Texture.class);
         assetManager.load("images/projectiles/regular.png", Texture.class);
+        assetManager.load("images/projectiles/reverse.png", Texture.class);
         assetManager.finishLoading();
 
         playerSpriteSheet = assetManager.get("images/player_sheet.png", Texture.class);
-        playerFrames = TextureRegion.split(playerSpriteSheet, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+        playerFrames = TextureRegion.split(playerSpriteSheet, Player.PLAYER_WIDTH, Player.PLAYER_HEIGHT);
 
         loadPlayerAnimations();
 
         backgroundTile = new TextureRegion(assetManager.get("images/background_tile.png", Texture.class));
 
         regularProjectileTexture = new TextureRegion(assetManager.get("images/projectiles/regular.png", Texture.class));
+        reverseProjectileTexture = new TextureRegion(assetManager.get("images/projectiles/reverse.png", Texture.class));
 
         shieldTextureVertical = new TextureRegion(assetManager.get("images/shield_vertical.png", Texture.class));
         shieldTextureHorizontal = new TextureRegion(assetManager.get("images/shield_horizontal.png", Texture.class));

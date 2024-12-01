@@ -4,8 +4,6 @@ public class Constants {
     public static final float GAME_WIDTH = 456f;
     public static final float GAME_HEIGHT = 256f;
 
-    public static final int PLAYER_WIDTH = 16;
-    public static final int PLAYER_HEIGHT = 16;
     public static final int PLAYER_LIVES = 5;
 
     public static final float SHIELD_LONG_SIDE = 20f;

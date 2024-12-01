@@ -1,10 +1,18 @@
 package io.github.shield_master.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import io.github.shield_master.actors.Player;
 
@@ -25,6 +33,12 @@ public class AssetLoader {
     public static TextureRegion shieldTextureVertical;
     public static TextureRegion shieldTextureHorizontal;
 
+    public static TextureRegion highScoreImage;
+    public static BitmapFont fontScore;
+    public static BitmapFont fontHighscore;
+
+    public static Image mainMenuBackground;
+
     public static void load() {
         assetManager = new AssetManager();
 
@@ -34,7 +48,11 @@ public class AssetLoader {
         assetManager.load("images/shield_vertical.png", Texture.class);
         assetManager.load("images/projectiles/regular.png", Texture.class);
         assetManager.load("images/projectiles/reverse.png", Texture.class);
+        assetManager.load("images/ui/highscore.png", Texture.class);
+        assetManager.load("images/ui/main_menu_background.png", Texture.class);
         assetManager.finishLoading();
+
+        mainMenuBackground = new Image(assetManager.get("images/ui/main_menu_background.png", Texture.class));
 
         playerSpriteSheet = assetManager.get("images/player_sheet.png", Texture.class);
         playerFrames = TextureRegion.split(playerSpriteSheet, Player.PLAYER_WIDTH, Player.PLAYER_HEIGHT);
@@ -48,6 +66,82 @@ public class AssetLoader {
 
         shieldTextureVertical = new TextureRegion(assetManager.get("images/shield_vertical.png", Texture.class));
         shieldTextureHorizontal = new TextureRegion(assetManager.get("images/shield_horizontal.png", Texture.class));
+
+        highScoreImage = new TextureRegion(assetManager.get("images/ui/highscore.png", Texture.class));
+        createFontScore();
+        createFontHighscore();
+    }
+
+    private static void createFontScore() {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/font.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 18;
+        parameter.borderColor = Color.BLACK;
+        parameter.borderWidth = 1;
+        fontScore = generator.generateFont(parameter);
+        generator.dispose();
+    }
+
+    private static void createFontHighscore() {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/font.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 14;
+        fontHighscore = generator.generateFont(parameter);
+        generator.dispose();
+    }
+
+    public static ImageButton.ImageButtonStyle getPlayButtonStyle() {
+        Texture buttonTexture = new Texture(Gdx.files.internal("images/ui/play_button.png"));
+        TextureRegionDrawable buttonDrawable = new TextureRegionDrawable(new TextureRegion(buttonTexture));
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.imageUp = buttonDrawable;
+        style.imageDown = buttonDrawable.tint(Color.GRAY);
+        return style;
+    }
+
+    public static ImageButton.ImageButtonStyle getExitButtonStyle() {
+        Texture buttonTexture = new Texture(Gdx.files.internal("images/ui/exit_button.png"));
+        TextureRegionDrawable buttonDrawable = new TextureRegionDrawable(new TextureRegion(buttonTexture));
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.imageUp = buttonDrawable;
+        style.imageDown = buttonDrawable.tint(Color.GRAY);
+        return style;
+    }
+
+    public static ImageButton.ImageButtonStyle getContinueButtonStyle() {
+        Texture buttonTexture = new Texture(Gdx.files.internal("images/ui/continue_button.png"));
+        TextureRegionDrawable buttonDrawable = new TextureRegionDrawable(new TextureRegion(buttonTexture));
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.imageUp = buttonDrawable;
+        style.imageDown = buttonDrawable.tint(Color.GRAY);
+        return style;
+    }
+
+    public static ImageButton.ImageButtonStyle getRestartButtonStyle() {
+        Texture buttonTexture = new Texture(Gdx.files.internal("images/ui/restart_button.png"));
+        TextureRegionDrawable buttonDrawable = new TextureRegionDrawable(new TextureRegion(buttonTexture));
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.imageUp = buttonDrawable;
+        style.imageDown = buttonDrawable.tint(Color.GRAY);
+        return style;
+    }
+
+    public static ImageButton.ImageButtonStyle getMenuButtonStyle() {
+        Texture buttonTexture = new Texture(Gdx.files.internal("images/ui/menu_button.png"));
+        TextureRegionDrawable buttonDrawable = new TextureRegionDrawable(new TextureRegion(buttonTexture));
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.imageUp = buttonDrawable;
+        style.imageDown = buttonDrawable.tint(Color.GRAY);
+        return style;
+    }
+
+    public static Drawable createTransparentBackground(float alpha) {
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(0, 0, 0, alpha);
+        pixmap.fill();
+        Texture texture = new Texture(pixmap);
+        pixmap.dispose();
+        return new TextureRegionDrawable(new TextureRegion(texture));
     }
 
     private static void loadPlayerAnimations() {

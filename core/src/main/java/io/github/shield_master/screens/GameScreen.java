@@ -25,6 +25,7 @@ import io.github.shield_master.actors.projectiles.ProjectileFactory;
 import io.github.shield_master.utils.AssetLoader;
 import io.github.shield_master.utils.Constants;
 import io.github.shield_master.utils.Direction;
+import io.github.shield_master.utils.GameManager;
 
 public class GameScreen implements Screen {
     private final MainGame game;
@@ -83,6 +84,7 @@ public class GameScreen implements Screen {
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetLoader.buttonPressSound.play();
                 if (!isPaused) return;
                 isPaused = false;
                 pauseMenu.setVisible(false);
@@ -93,6 +95,7 @@ public class GameScreen implements Screen {
         mainMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetLoader.buttonPressSound.play();
                 if (!isPaused) return;
                 game.setScreen(new MainMenuScreen(game));
                 dispose();
@@ -108,6 +111,7 @@ public class GameScreen implements Screen {
     public void show() {
         player.rotate(Direction.UP);
         score = 0;
+        AssetLoader.gameMusic.play();
     }
 
     @Override
@@ -138,6 +142,10 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             isPaused = !isPaused;
             pauseMenu.setVisible(isPaused);
+            if (isPaused)
+                AssetLoader.gameMusic.pause();
+            else
+                AssetLoader.gameMusic.play();
         }
         if (isPaused) return;
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
@@ -156,13 +164,16 @@ public class GameScreen implements Screen {
             if (actor instanceof Projectile projectile) {
                 if (Intersector.overlaps(player.getShieldBoundingRectangle(), projectile.getBounds())) {
                     projectile.deactivate();
+                    AssetLoader.blockSounds[(int) (Math.random() * AssetLoader.blockSounds.length)].play(GameManager.getSoundVolume());
                     score++;
                     scoreLabel.setText("Score: " + score);
                 }
                 if (Intersector.overlaps(player.getBoundingRectangle(), projectile.getBounds())) {
-//                    player.lives--;
+                    player.lives--;
+                    AssetLoader.hitSound.play(GameManager.getSoundVolume());
                     projectile.deactivate();
                     if (player.lives == 0) {
+                        hide();
                         game.setScreen(new GameOverScreen(game, score));
                         dispose();
                     }
@@ -183,7 +194,9 @@ public class GameScreen implements Screen {
     public void resume() {}
 
     @Override
-    public void hide() {}
+    public void hide() {
+        AssetLoader.gameMusic.stop();
+    }
 
     @Override
     public void dispose() {

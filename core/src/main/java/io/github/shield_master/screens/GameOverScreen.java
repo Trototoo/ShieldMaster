@@ -60,6 +60,7 @@ public class GameOverScreen implements Screen {
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetLoader.buttonPressSound.play(GameManager.getSoundVolume());
                 game.setScreen(new GameScreen(game));
                 dispose();
             }
@@ -71,6 +72,7 @@ public class GameOverScreen implements Screen {
         mainMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetLoader.buttonPressSound.play(GameManager.getSoundVolume());
                 game.setScreen(new MainMenuScreen(game));
                 dispose();
             }
@@ -83,6 +85,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
+        AssetLoader.loseSound.play();
     }
 
     @Override

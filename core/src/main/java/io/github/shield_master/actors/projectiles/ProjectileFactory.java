@@ -16,13 +16,15 @@ public class ProjectileFactory {
     private enum ProjectileType {
         REGULAR,
         REVERSE,
+        FAKE
     }
 
     private static final List<ProjectileChance> projectileChances = new ArrayList<>();
 
     static {
-        projectileChances.add(new ProjectileChance(ProjectileType.REGULAR, 0.9f));
+        projectileChances.add(new ProjectileChance(ProjectileType.REGULAR, 0.75f));
         projectileChances.add(new ProjectileChance(ProjectileType.REVERSE, 0.10f));
+        projectileChances.add(new ProjectileChance(ProjectileType.FAKE, 0.15f));
     }
 
     public static void generateProjectile(Group projectilesGroup) {
@@ -33,6 +35,10 @@ public class ProjectileFactory {
         Projectile projectile = switch (projectileType) {
             case REGULAR -> new RegularProjectile(regularProjectileTexture, direction);
             case REVERSE -> new ReverseProjectile(reverseProjectileTexture, direction);
+            case FAKE -> {
+                boolean isReverseFake = Math.random() < 0.5;
+                yield new FakeProjectile(isReverseFake ? reverseProjectileTexture : regularProjectileTexture, direction, isReverseFake);
+            }
         };
 
         projectilesGroup.addActor(projectile);

@@ -24,7 +24,7 @@ public class ReverseProjectile extends Projectile {
 
     public ReverseProjectile(TextureRegion textureRegion, Direction direction) {
         super(textureRegion, direction);
-
+        System.out.println(textureRegion.toString());
         clockwise = Math.random() < 0.5;
 
         setPointsAndRotationDirection();
@@ -80,7 +80,7 @@ public class ReverseProjectile extends Projectile {
         float originX = Constants.GAME_WIDTH / 2;
         float originY = Constants.GAME_HEIGHT / 2;
 
-        angle += angleDelta * delta;
+        angle += angleDelta * delta * Constants.PROJECTILE_SPEED / 15;
 
         float x_offset = ROTATION_RADIUS * (float) Math.cos(angle);
         float y_offset = ROTATION_RADIUS * (float) Math.sin(angle);

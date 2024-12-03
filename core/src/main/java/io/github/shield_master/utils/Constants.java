@@ -11,6 +11,6 @@ public class Constants {
     public static final float SHIELD_SIZE_OFFSET = 2f;
     public static final float SHIELD_PADDING_OFFSET = 5f;
 
-    public static final float PROJECTILE_SPEED = 20f;
+    public static final float PROJECTILE_SPEED = 30f;
     public static final float PROJECTILE_SPAWN_INTERVAL = 0.7f;
 }

@@ -1,36 +1,46 @@
-# ShieldMaster
+# **Shield Master**
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+Shield Master is an action-packed 2D game built using Java and the LibGDX framework. Rotate your shield to block incoming projectiles, score points, and survive as long as you can!
 
-This project was generated with a template including simple application launchers and a main class extending `Game` that sets the first screen.
+## **Controls**
+- **Arrow Keys / WASD Keys:** Rotate the shield in four directions (Up, Down, Left, Right).
+- **Escape Key:** Pause or unpause the game.
+- **Mouse:** Navigate through buttons and sliders in the UI.
 
-## Platforms
+---
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
-- `html`: Web platform using GWT and WebGL. Supports only Java projects.
+## **Installation**
 
-## Gradle
+To set up the project, follow these steps:
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/Trototoo/ShieldMaster.git
+    cd ShieldMaster
+    ```
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `html:dist`: compiles GWT sources. The compiled application can be found at `html/build/dist`: you can use any HTTP server to deploy it.
-- `html:superDev`: compiles GWT sources and runs the application in SuperDev mode. It will be available at [localhost:8080/html](http://localhost:8080/html). Use only during development.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
+2. Ensure you have Java 17 installed.
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+3. Build the project using Gradle:
+    ```sh
+    ./gradlew build
+    ```
+
+## Usage
+
+To run the game, use the following command:
+```sh
+./gradlew lwjgl3:run
+```
+
+---
+
+## Game Preview
+![](media/game_preview.gif)
+## [Gameplay on YouTube](https://youtu.be/8mxuCmyJkhc)
+
+---
+
+## Credits
+
+Made by Nazarenko Oleksandr IM-12

@@ -27,22 +27,22 @@ public abstract class Projectile extends Actor {
         switch (direction) {
             case UP -> {
                 standardVelocity = new Vector2(0, 10 * Constants.PROJECTILE_SPEED);
-                setSize(7f, 13f);
+                setSize(PROJECTILE_SHORT_SIDE, PROJECTILE_LONG_SIDE);
                 setPosition(Constants.GAME_WIDTH / 2 - getWidth() / 2, 0);
             }
             case DOWN -> {
                 standardVelocity = new Vector2(0, -10 * Constants.PROJECTILE_SPEED);
-                setSize(7f, 13f);
+                setSize(PROJECTILE_SHORT_SIDE, PROJECTILE_LONG_SIDE);
                 setPosition(Constants.GAME_WIDTH / 2 - getWidth() / 2, Constants.GAME_HEIGHT - getHeight());
             }
             case LEFT -> {
                 standardVelocity = new Vector2(-10 * Constants.PROJECTILE_SPEED, 0);
-                setSize(13f, 7f);
+                setSize(PROJECTILE_LONG_SIDE, PROJECTILE_SHORT_SIDE);
                 setPosition(Constants.GAME_WIDTH - getWidth(), Constants.GAME_HEIGHT / 2 - getHeight() / 2);
             }
             case RIGHT -> {
                 standardVelocity = new Vector2(10 * Constants.PROJECTILE_SPEED, 0);
-                setSize(13f, 7f);
+                setSize(PROJECTILE_LONG_SIDE, PROJECTILE_SHORT_SIDE);
                 setPosition(0, Constants.GAME_HEIGHT / 2 - getHeight() / 2);
             }
         }

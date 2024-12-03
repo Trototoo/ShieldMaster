@@ -22,6 +22,7 @@ import io.github.shield_master.actors.Background;
 import io.github.shield_master.actors.Player;
 import io.github.shield_master.actors.projectiles.Projectile;
 import io.github.shield_master.actors.projectiles.ProjectileFactory;
+import io.github.shield_master.actors.projectiles.ReverseProjectile;
 import io.github.shield_master.utils.AssetLoader;
 import io.github.shield_master.utils.Constants;
 import io.github.shield_master.utils.Direction;
@@ -59,7 +60,7 @@ public class GameScreen implements Screen {
         player = new Player();
         stage.addActor(player);
 
-        scoreLabel = new Label("Score: 0", new Label.LabelStyle(AssetLoader.fontScore, Color.WHITE));
+        scoreLabel = new Label("Score: 0\nLives: 5", new Label.LabelStyle(AssetLoader.fontScore, Color.WHITE));
         scoreLabel.setPosition(20, Constants.GAME_HEIGHT - 30);
         stage.addActor(scoreLabel);
 
@@ -88,6 +89,7 @@ public class GameScreen implements Screen {
                 if (!isPaused) return;
                 isPaused = false;
                 pauseMenu.setVisible(false);
+                AssetLoader.gameMusic.play();
             }
         });
 
@@ -121,8 +123,19 @@ public class GameScreen implements Screen {
 
         handleInput();
         if (isPaused) {
+            for (Actor actor : projectiles.getChildren()) {
+                if (actor instanceof ReverseProjectile reverseProjectile) {
+                    reverseProjectile.setPaused(true);
+                }
+            }
             stage.draw();
             return;
+        }
+
+        for (Actor actor : projectiles.getChildren()) {
+            if (actor instanceof ReverseProjectile reverseProjectile) {
+                reverseProjectile.setPaused(false);
+            }
         }
 
         spawnTimer += delta;
@@ -148,13 +161,13 @@ public class GameScreen implements Screen {
                 AssetLoader.gameMusic.play();
         }
         if (isPaused) return;
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             player.rotate(Direction.UP);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             player.rotate(Direction.DOWN);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             player.rotate(Direction.LEFT);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             player.rotate(Direction.RIGHT);
         }
     }
@@ -166,10 +179,11 @@ public class GameScreen implements Screen {
                     projectile.deactivate();
                     AssetLoader.blockSounds[(int) (Math.random() * AssetLoader.blockSounds.length)].play(GameManager.getSoundVolume());
                     score++;
-                    scoreLabel.setText("Score: " + score);
+                    scoreLabel.setText("Score: " + score + "\nLives: " + player.lives);
                 }
                 if (Intersector.overlaps(player.getBoundingRectangle(), projectile.getBounds())) {
                     player.lives--;
+                    scoreLabel.setText("Score: " + score + "\nLives: " + player.lives);
                     AssetLoader.hitSound.play(GameManager.getSoundVolume());
                     projectile.deactivate();
                     if (player.lives == 0) {

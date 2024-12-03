@@ -21,6 +21,7 @@ public class ReverseProjectile extends Projectile {
 
     private final float SIZE = 8;
     private float textureAngle = 0;
+    private float textureAngleOffset = 15f;
 
     public ReverseProjectile(TextureRegion textureRegion, Direction direction) {
         super(textureRegion, direction);
@@ -143,7 +144,15 @@ public class ReverseProjectile extends Projectile {
             float offsetY = (direction == Direction.UP || direction == Direction.DOWN) ? (getHeight() - getWidth()) / 2 : 0;
 
             batch.draw(textureRegion, getX() + offsetX, getY() + offsetY, SIZE / 2, SIZE / 2, SIZE, SIZE, 1, 1, textureAngle);
-            textureAngle += 15f;
+            textureAngle += textureAngleOffset;
+        }
+    }
+
+    public void setPaused(boolean paused) {
+        if (paused) {
+            textureAngleOffset = 0f;
+        } else {
+            textureAngleOffset = 15f;
         }
     }
 }

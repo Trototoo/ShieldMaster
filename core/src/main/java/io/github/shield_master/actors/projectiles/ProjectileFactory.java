@@ -22,9 +22,9 @@ public class ProjectileFactory {
     private static final List<ProjectileChance> projectileChances = new ArrayList<>();
 
     static {
-        projectileChances.add(new ProjectileChance(ProjectileType.REGULAR, 0.75f));
-        projectileChances.add(new ProjectileChance(ProjectileType.REVERSE, 0.10f));
-        projectileChances.add(new ProjectileChance(ProjectileType.FAKE, 0.15f));
+        projectileChances.add(new ProjectileChance(ProjectileType.REGULAR, 0.70f));
+        projectileChances.add(new ProjectileChance(ProjectileType.REVERSE, 0.20f));
+        projectileChances.add(new ProjectileChance(ProjectileType.FAKE, 0.10f));
     }
 
     public static void generateProjectile(Group projectilesGroup) {

@@ -85,7 +85,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
-        AssetLoader.loseSound.play();
+        AssetLoader.loseSound.play(GameManager.getSoundVolume());
     }
 
     @Override

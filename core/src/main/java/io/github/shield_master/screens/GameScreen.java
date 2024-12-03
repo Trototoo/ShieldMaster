@@ -84,7 +84,7 @@ public class GameScreen implements Screen {
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                AssetLoader.buttonPressSound.play();
+                AssetLoader.buttonPressSound.play(GameManager.getSoundVolume());
                 if (!isPaused) return;
                 isPaused = false;
                 pauseMenu.setVisible(false);
@@ -95,7 +95,7 @@ public class GameScreen implements Screen {
         mainMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                AssetLoader.buttonPressSound.play();
+                AssetLoader.buttonPressSound.play(GameManager.getSoundVolume());
                 if (!isPaused) return;
                 game.setScreen(new MainMenuScreen(game));
                 dispose();
